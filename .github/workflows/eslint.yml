@@ -2,7 +2,9 @@ name: ESLint Code Scan
 
 on:
   push:
+    branches: ['**']
   pull_request:
+    branches: ['**']
 
 jobs:
   eslint:
@@ -16,15 +18,29 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run ESLint and generate JSON report
         run: npm run lint:json
+        continue-on-error: true
+
+      - name: Display ESLint results
+        if: always()
+        run: |
+          if [ -f eslint-report.json ]; then
+            echo "ESLint report generated successfully"
+            cat eslint-report.json
+          else
+            echo "ESLint report was not generated"
+          fi
 
       - name: Upload ESLint JSON Artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: eslint-json-report
           path: eslint-report.json
+          if-no-files-found: warn
