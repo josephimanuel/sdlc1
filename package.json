@@ -1,0 +1,24 @@
+{
+  "name": "case2",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "express": "^4.22.1"
+  },
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "lint": "eslint . --format stylish",
+    "lint:json": "eslint . --format json --output-file eslint-report.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-security": "^3.0.1"
+  }
+}

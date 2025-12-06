@@ -1,0 +1,21 @@
+[{"filePath":"D:\\kampus\\sdlc2\\case2 - unsafe file path\\case2 - unsafe file path\\controllers\\fileController.js","messages":[],"suppressedMessages":[],"errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0,"usedDeprecatedRules":[]},{"filePath":"D:\\kampus\\sdlc2\\case2 - unsafe file path\\case2 - unsafe file path\\eslint.config.cjs","messages":[],"suppressedMessages":[],"errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0,"usedDeprecatedRules":[]},{"filePath":"D:\\kampus\\sdlc2\\case2 - unsafe file path\\case2 - unsafe file path\\models\\fileModel.js","messages":[],"suppressedMessages":[],"errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0,"usedDeprecatedRules":[]},{"filePath":"D:\\kampus\\sdlc2\\case2 - unsafe file path\\case2 - unsafe file path\\routes\\fileRoutes.js","messages":[],"suppressedMessages":[],"errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0,"usedDeprecatedRules":[]},{"filePath":"D:\\kampus\\sdlc2\\case2 - unsafe file path\\case2 - unsafe file path\\server.js","messages":[],"suppressedMessages":[],"errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0,"usedDeprecatedRules":[]},{"filePath":"D:\\kampus\\sdlc2\\case2 - unsafe file path\\case2 - unsafe file path\\services\\fileService.js","messages":[{"ruleId":"security/detect-non-literal-fs-filename","severity":2,"message":"Found readFileSync from package \"fs\" with non literal argument at index 0","line":5,"column":10,"nodeType":"CallExpression","endLine":5,"endColumn":43},{"ruleId":"node/no-sync","severity":1,"message":"Unexpected sync method: 'readFileSync'.","line":5,"column":10,"nodeType":"MemberExpression","messageId":"noSync","endLine":5,"endColumn":25}],"suppressedMessages":[],"errorCount":1,"fatalErrorCount":0,"warningCount":1,"fixableErrorCount":0,"fixableWarningCount":0,"source":"import fs from \"fs\";\r\n\r\nexport function readFile(filename) {\r\n  const filePath = `./data/${filename}`;\r\n  return fs.readFileSync(filePath, \"utf8\");\r\n}","usedDeprecatedRules":[]}]
+
+During the ESLint analysis, two security and performance issues were found in the file services/fileService.js:
+
+Use of readFileSync with a non-literal filename
+
+The code uses fs.readFileSync() with a dynamic (non-literal) file path.
+
+This creates a risk of Path Traversal attacks, where an attacker could manipulate the input path to access sensitive system files.
+
+Detected by rule: security/detect-non-literal-fs-filename.
+
+Use of synchronous file system method
+
+readFileSync blocks the Node.js event loop.
+
+This can negatively impact application performance and cause delays for other requests, especially in concurrent environments.
+
+Detected by rule: node/no-sync.
+
+These vulnerabilities are important to address by using asynchronous file operations and validating file paths before reading files.
